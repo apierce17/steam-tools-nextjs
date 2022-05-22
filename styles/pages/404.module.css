@@ -1,0 +1,17 @@
+.errorContainer {
+    width: 100%;
+    height: calc(100vh - 180px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto 0;
+    background-image: url(https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/page_bg_generated_v6b.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.error {
+    color: var(--text);
+}
