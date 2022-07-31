@@ -1,0 +1,70 @@
+.profileWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50vw;
+  max-width: 750px;
+  flex-direction: column;
+}
+.gamesContainer {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-height: 500px;
+    overflow: auto;
+}
+.gameCard {
+  position: relative;
+  width: 150px;
+  height: 225px;
+  perspective: 1000px;
+}
+.gameCard > span {
+  background-size: 275%;
+  background-position: center;
+  border-radius: 15px;
+  background: radial-gradient(
+    circle at top,
+    rgba(104, 117, 127, 1) 0%,
+    rgba(18, 33, 50, 1) 72%
+  )!important;
+}
+.gameCard > span::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 500%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 55%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0.1) 75%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  transform: skewX(55deg) translateX(50%);
+  transition: ease-in-out 0.2s;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.gameCard > span:hover::before {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 55%,
+    rgba(255, 255, 255, 0.2) 60%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  transform: skewX(55deg) translateX(35%);
+  transition: ease-in-out 0.2s;
+}
+.gameCard > span:hover {
+  transition-timing-function: ease-out;
+  transition: 0.25s;
+  transform: rotateX(10deg) scale(1.05) translateY(0px);
+  box-shadow: 0px 7px 15px 0px rgba(0, 0, 0, 0.5);
+}

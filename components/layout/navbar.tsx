@@ -2,7 +2,7 @@ import { useRef } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from "next/router";
-import styles from '../../styles/components/navbar.module.css'
+import styles from '../../styles/layout/navbar.module.css'
 
 import logo from '../../public/images/logo.svg'
 import React from "react";
