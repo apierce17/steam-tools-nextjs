@@ -6,9 +6,6 @@ import Layout from '../components/layout/layout'
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>
-        <title>{Component.title} Steam Tools</title>        
-      </Head>
       <Layout>
         <Component {...pageProps} />
       </Layout>
