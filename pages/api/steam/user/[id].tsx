@@ -1,6 +1,4 @@
-import { useRouter } from "next/router";
-
-const apikey = process.env.REACT_APP_API_KEY_1;
+const apikey = process.env.REACT_APP_STEAM_KEY;
 
 const resolveVanityURL = async (id: string) => {
   const response = await fetch(

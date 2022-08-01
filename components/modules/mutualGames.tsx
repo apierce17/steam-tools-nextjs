@@ -5,14 +5,8 @@ import styles from "../../styles/components/profile.module.css";
 import Image from "next/image";
 import { Key, useState } from "react";
 
-export default function Profile(props: {
-  playerName: string;
-  imageName: any;
-  profileLink: string;
+export default function MutualGames(props: {
   games: any;
-  setUserId?: any;
-  setUserTwoId?: any;
-  isUserOne: boolean;
 }) {
 
   const myLoader = (src: any) => {
@@ -21,33 +15,14 @@ export default function Profile(props: {
 
   return (
     <div className={styles.profileWrapper}>
-      {props.isUserOne ? <button onClick={() => { props.setUserId(''); }}>sad</button> : <button onClick={() => { props.setUserTwoId('') }}>sad</button>}
-      {props.imageName && (
-        <a
-          title={"Go to" + props.playerName + ""}
-          href={props.profileLink}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Image
-            loader={myLoader}
-            src={props.imageName}
-            width={100}
-            height={100}
-            alt={props.playerName + " logo"}
-            unoptimized={true}
-          />
-        </a>
-      )}
-      {props.playerName}
       <div className={styles.gamesContainer}>
-        {props.games.games ? props.games.games.map(
-          (game: { name: any; appid: number }, idx: Key) => {
+        {props.games.map(
+          (game: string, idx: Key) => {
             return (
               <a
                 className={styles.gameCard}
                 key={idx}
-                href={"https://steamcommunity.com/app/" + game.appid}
+                href={"https://steamcommunity.com/app/" + game}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -55,13 +30,13 @@ export default function Profile(props: {
                   loader={myLoader}
                   src={
                     "https://steamcdn-a.akamaihd.net/steam/apps/" +
-                    game.appid +
-                    "/library_600x900.jpg" ||
+                      game +
+                      "/library_600x900.jpg" ||
                     "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA="
                   }
                   className={styles.gameCard}
                   layout="fill"
-                  alt={props.playerName + " logo"}
+                  alt={"logo"}
                   onError={(e) =>
                     ((e.target as HTMLImageElement).style.display = "none")
                   }
@@ -70,7 +45,7 @@ export default function Profile(props: {
               </a>
             );
           }
-        ) : 'No Games Found'}
+        )}
       </div>
     </div>
   );
