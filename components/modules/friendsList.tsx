@@ -7,10 +7,10 @@ import { Key, useEffect, useState } from "react";
 
 export default function FriendsList(props: { friends: any, setUserTwoId: any }) {
   const [friends, setFriends] = useState<any>([]);
+  const [userId, setUserId] = useState('')
   const myLoader = (src: any) => {
     return `${src.src}`;
   };
-
   const fetchUser = async (userId: string) => {
     const response = await fetch(
       "/api/steam/user/" + userId + "?getfriends=false&getgames=false"
@@ -37,9 +37,19 @@ export default function FriendsList(props: { friends: any, setUserTwoId: any }) 
       });
   }, [props.friends]);
 
+  const formSubmit = async (e: any) => {
+    e.preventDefault(); 
+    const user = await fetchUser(userId);
+    console.log(user)
+    props.setUserTwoId(user.steamid)
+  }
+
   return (
     <div className={styles.profileWrapper}>
       <div className={styles.gamesContainer}>
+        <form onSubmit={(e) => { formSubmit(e) }}>
+          <input type='text' name="userId" title="userId" onChange={e => setUserId(e.target.value)} /><button>dsa</button>
+        </form>
         <ul>
           {friends.length > 0 && friends.map(
             (

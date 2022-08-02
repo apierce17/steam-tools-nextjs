@@ -1,0 +1,8 @@
+.compareWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+}

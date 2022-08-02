@@ -28,6 +28,7 @@ export default function Profile(props: {
           href={props.profileLink}
           target="_blank"
           rel="noreferrer"
+          className={styles.profilePicture}
         >
           <Image
             loader={myLoader}

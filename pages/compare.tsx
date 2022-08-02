@@ -1,13 +1,9 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { prependOnceListener } from "process";
+
 import { Key, useEffect, useState } from "react";
 import FriendsList from "../components/modules/friendsList";
 import MutualGames from "../components/modules/mutualGames";
 import Profile from "../components/modules/profile";
-import styles from "../styles/pages/Home.module.css";
+import styles from "../styles/pages/Compare.module.css";
 
 Compare.title = "Compare -";
 export default function Compare() {
@@ -47,7 +43,7 @@ export default function Compare() {
   }, [userTwo.games])
 
   useEffect(() => {
-    userId == '' && (setUserOne(''), setUserOneGameIds([]), setMatchedGames([]), setUserTwoId('') ,setUserTwo(''), setUserTwoGameIds([]), setMatchedGames([]))
+    userId == '' && (setUserOne(''), setUserOneGameIds([]), setMatchedGames([]), setUserTwoId(''), setUserTwo(''), setUserTwoGameIds([]), setMatchedGames([]))
   }, [userId])
 
   useEffect(() => {
@@ -57,49 +53,51 @@ export default function Compare() {
   console.log(matchedGames)
   return (
     <>
-      {!userOne.user && (
-        <>
-          <input
-            title="userId"
-            type="text"
-            name="userId"
-            onChange={(e) => setUserId(e.target.value)}
-          />
-          <button onClick={() => fetchUserOne()}>dsa</button>
-        </>
-      )}
-      {userOne.user && (
-        <>
-          <Profile
-            playerName={userOne.user.personaname}
-            imageName={userOne.user.avatarfull}
-            profileLink={userOne.user.profileurl}
-            games={userOne.games}
-            isUserOne={true}
-            setUserId={setUserId}
-          />
-
-          {!userTwoId && (
-            <FriendsList
-              friends={userOne.friends}
-              setUserTwoId={setUserTwoId}
+      <div className={styles.compareWrapper}>
+        {!userOne.user && (
+          <>
+            <input
+              title="userId"
+              type="text"
+              name="userId"
+              onChange={(e) => setUserId(e.target.value)}
             />
-          )}
-          {userTwoId && userTwo.user && (
-            <>
-              <Profile
-                playerName={userTwo.user.personaname}
-                imageName={userTwo.user.avatarfull}
-                profileLink={userTwo.user.profileurl}
-                games={userTwo.games}
-                isUserOne={false}
+            <button onClick={() => fetchUserOne()}>dsa</button>
+          </>
+        )}
+        {userOne.user && (
+          <>
+            <Profile
+              playerName={userOne.user.personaname}
+              imageName={userOne.user.avatarfull}
+              profileLink={userOne.user.profileurl}
+              games={userOne.games}
+              isUserOne={true}
+              setUserId={setUserId}
+            />
+
+            {!userTwoId && (
+              <FriendsList
+                friends={userOne.friends}
                 setUserTwoId={setUserTwoId}
               />
-              <MutualGames games={matchedGames} />
-            </>
-          )}
-        </>
-      )}
+            )}
+            {userTwoId && userTwo.user && (
+              <>
+                <Profile
+                  playerName={userTwo.user.personaname}
+                  imageName={userTwo.user.avatarfull}
+                  profileLink={userTwo.user.profileurl}
+                  games={userTwo.games}
+                  isUserOne={false}
+                  setUserTwoId={setUserTwoId}
+                />
+                <MutualGames games={matchedGames} />
+              </>
+            )}
+          </>
+        )}
+      </div>
     </>
   );
 }

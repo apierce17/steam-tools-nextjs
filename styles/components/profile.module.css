@@ -2,9 +2,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50vw;
+  width: 45%;
   max-width: 750px;
   flex-direction: column;
+}
+
+.profileWrapper {
+  background-color: var(--dark-blue-glass);
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid var(--border)
+}
+
+.profileWrapper .profilePicture {
+  border-radius: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
 .gamesContainer {
     width: 90%;
