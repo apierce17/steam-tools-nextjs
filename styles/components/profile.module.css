@@ -1,32 +1,74 @@
 .profileWrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  width: 45%;
+  width: 49%;
   max-width: 750px;
   flex-direction: column;
-}
-
-.profileWrapper {
+  position: relative;
+  height: 700px;
   background-color: var(--dark-blue-glass);
   padding: 20px;
   border-radius: 15px;
   border: 1px solid var(--border)
 }
-
-.profileWrapper .profilePicture {
+.user {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.user img {
   border-radius: 100%;
   overflow: hidden;
   border: 1px solid var(--border);
 }
+
+.online {
+  border: 2px solid var(--dark-green);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.offline {
+  border: 2px solid var(--border);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .gamesContainer {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    max-height: 500px;
+    height: 500px;
     overflow: auto;
+    padding: 10px;
+    background-color: var(--steam-blue);
+    border-radius: 7px;
+    border: 1px solid var(--border);
+}
+.gamesContainer::-webkit-scrollbar {
+  width: 10px;
+}
+.gamesContainer::-webkit-scrollbar-track {
+  background: var(--dark-blue-glass);
+  border-left: 1px solid var(--border);
+  border-radius:  0 6px 6px 0;
+}
+.gamesContainer::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius:  0 6px 6px 0;
+  cursor: pointer;
+}
+.gamesContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 .gameCard {
   position: relative;
@@ -64,7 +106,8 @@
   z-index: 4;
 }
 
-.gameCard > span:hover::before {
+.gameCard > span:hover::before,
+.gameCard > span:focus-within   ::before {
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 55%,
@@ -75,9 +118,43 @@
   transform: skewX(55deg) translateX(35%);
   transition: ease-in-out 0.2s;
 }
-.gameCard > span:hover {
+.gameCard > span:hover,
+.gameCard > span:focus-within    {
   transition-timing-function: ease-out;
   transition: 0.25s;
   transform: rotateX(10deg) scale(1.05) translateY(0px);
   box-shadow: 0px 7px 15px 0px rgba(0, 0, 0, 0.5);
+}
+.gameLoading {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-left: 10px;
+}
+.backButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: transparent;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noGames {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+.noGames svg {
+  font-size: 40px;
+  margin-bottom: 10px;
 }

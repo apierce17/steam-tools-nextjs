@@ -39,3 +39,14 @@ main {
   padding: 0 20px;
   min-height: calc(100vh - 180px);
 }
+
+.greenButton {
+  background-color: var(--dark-green);
+  border: none;
+  padding: 3px 5px;
+  border-radius: 12px;
+  color: var(--green-text);
+  text-shadow: 1px 1px 1px black;
+  font-weight: 600;
+  cursor: pointer;
+}

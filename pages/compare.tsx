@@ -1,5 +1,6 @@
 
-import { Key, useEffect, useState } from "react";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import FriendsList from "../components/modules/friendsList";
 import MutualGames from "../components/modules/mutualGames";
 import Profile from "../components/modules/profile";
@@ -22,7 +23,8 @@ export default function Compare() {
     const data = await response.json();
     setUserOne(data);
     data.games.games && data.games.games.map((game: any) => userOneGameIds.push(game.appid))
-    console.log(data);
+    console.log(dayjs.unix(data.user.lastlogoff));
+    console.log(data)
   };
 
   useEffect(() => {
@@ -36,11 +38,11 @@ export default function Compare() {
       console.log(data);
     };
     fetchUserTwo();
-  }, [userTwoId]);
+  }, [userTwoGameIds, userTwoId]);
 
   useEffect(() => {
     userTwo.games && setMatchedGames(userOneGameIds.filter((element: any) => userTwoGameIds.includes(element)));
-  }, [userTwo.games])
+  }, [userOneGameIds, userTwo.games, userTwoGameIds])
 
   useEffect(() => {
     userId == '' && (setUserOne(''), setUserOneGameIds([]), setMatchedGames([]), setUserTwoId(''), setUserTwo(''), setUserTwoGameIds([]), setMatchedGames([]))
@@ -74,6 +76,8 @@ export default function Compare() {
               games={userOne.games}
               isUserOne={true}
               setUserId={setUserId}
+              btnText="Clear Users"
+              personastate={userOne.user.personastate}
             />
 
             {!userTwoId && (
@@ -91,6 +95,8 @@ export default function Compare() {
                   games={userTwo.games}
                   isUserOne={false}
                   setUserTwoId={setUserTwoId}
+                  btnText="Friends List"
+                  personastate={userTwo.user.personastate}
                 />
                 <MutualGames games={matchedGames} />
               </>
