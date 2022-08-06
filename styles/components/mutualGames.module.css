@@ -1,44 +1,19 @@
-.profileWrapper {
+.mutualWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 49%;
-  max-width: 750px;
+  width: 100%;
+  max-width: 1500px;
   flex-direction: column;
   position: relative;
-  height: 700px;
+  height: auto;
   background-color: var(--dark-blue-glass);
   padding: 20px;
   border-radius: 15px;
   border: 1px solid var(--border);
 }
-.user {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.user img {
-  border-radius: 100%;
-  overflow: hidden;
-  border: 1px solid var(--border);
-}
-
-.online {
-  border: 2px solid var(--dark-green);
-  border-radius: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.offline {
-  border: 2px solid var(--border);
-  border-radius: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.mutualWrapper h2 {
+    margin-bottom: 20px;
 }
 
 .gamesContainer {
@@ -80,15 +55,36 @@
 }
 .gameCard p {
   position: relative;
-  z-index:1;
+  z-index: 1;
   width: 90%;
   text-align: center;
   pointer-events: none;
   margin: 30px auto;
-  display: none
+  display: none;
+}
+.gameCard.multi > span::after {
+  display: block;
+  content: "Multiplayer";
+  width: auto;
+  height: auto;
+  background-color: var(--blue);
+  color: var(--text);
+  text-shadow: 0px 0px 4px black;
+  position: absolute;
+  z-index: 10;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 4px;
+  font-size: 10px;
+  border-radius: 7px 7px 0 0;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 .gameCard:hover p {
-  transform: rotateX(10deg) scale(1.05) translateY(0px);
+  transform: rotateX(10deg) scale(1.05);
   transition: ease-in-out 0.2s;
 }
 .gameCard img {
@@ -153,18 +149,6 @@
   justify-content: center;
   margin-left: 10px;
 }
-.backButton {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: transparent;
-  border: none;
-  color: var(--white);
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .noGames {
   display: flex;
@@ -179,8 +163,8 @@
   margin-bottom: 10px;
 }
 .gameCard :global(.imgError) img {
-  display: none!important;
+  display: none !important;
 }
 .gameCard :global(.imgError) + p {
-  display: block!important;
+  display: block !important;
 }

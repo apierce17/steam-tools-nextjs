@@ -23,8 +23,6 @@ export default function Compare() {
     const data = await response.json();
     setUserOne(data);
     data.games.games && data.games.games.map((game: any) => userOneGameIds.push(game.appid))
-    console.log(dayjs.unix(data.user.lastlogoff));
-    console.log(data)
   };
 
   useEffect(() => {
@@ -35,7 +33,6 @@ export default function Compare() {
       const data = await response.json();
       setUserTwo(data);
       data.games.games && data.games.games.map((game: any) => userTwoGameIds.push(game.appid))
-      console.log(data);
     };
     fetchUserTwo();
   }, [userTwoGameIds, userTwoId]);

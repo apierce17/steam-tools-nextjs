@@ -3,7 +3,7 @@ import styles from "../../styles/components/profile.module.css";
 import Image from "next/image";
 import { Key, useState } from "react";
 import { BiChevronsLeft } from "react-icons/bi";
-import {GiOpenChest} from 'react-icons/gi'
+import { GiOpenChest } from "react-icons/gi";
 export default function Profile(props: {
   playerName: string;
   imageName: any;
@@ -66,43 +66,47 @@ export default function Profile(props: {
         {props.playerName}
       </div>
       <div className={styles.gamesContainer}>
-        {props.games.games
-          ? props.games.games.map(
-              (game: { name: any; appid: number }, idx: Key) => {
-                return (
-                  <a
+        {props.games.games ? (
+          props.games.games.map(
+            (game: { name: any; appid: number }, idx: Key) => {
+              return (
+                <a
+                  className={styles.gameCard}
+                  key={idx}
+                  href={"https://store.steampowered.com/app/" + game.appid}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Image
+                    loader={myLoader}
+                    src={
+                      "https://steamcdn-a.akamaihd.net/steam/apps/" +
+                      game.appid +
+                      "/library_600x900.jpg"
+                    }
                     className={styles.gameCard}
-                    key={idx}
-                    href={"https://steamcommunity.com/app/" + game.appid}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Image
-                      loader={myLoader}
-                      src={
-                        "https://steamcdn-a.akamaihd.net/steam/apps/" +
-                          game.appid +
-                          "/library_600x900.jpg" ||
-                        "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA="
-                      }
-                      className={styles.gameCard}
-                      layout="fill"
-                      alt={props.playerName + " logo"}
-                      onError={(e) =>
-                        ((e.target as HTMLImageElement).style.display = "none")
-                      }
-                      unoptimized={true}
-                    />
-                  </a>
-                );
-              }
-            )
-          : (
-            <div className={styles.noGames}>
-              <GiOpenChest/>
-              Looks like there is nothing here..
-            </div>
-          )}
+                    layout="fill"
+                    alt={props.playerName + " logo"}
+                    onError={
+                      (e) =>
+                        (e.target as any).parentNode.classList.add(
+                          "imgError"
+                        )
+                      // console.log(e.target.parentNode)
+                    }
+                    unoptimized={true}
+                  />
+                  <p>{game.name}</p>
+                </a>
+              );
+            }
+          )
+        ) : (
+          <div className={styles.noGames}>
+            <GiOpenChest />
+            Looks like there is nothing here..
+          </div>
+        )}
       </div>
     </div>
   );

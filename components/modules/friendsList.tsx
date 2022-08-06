@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "../../styles/components/friendsList.module.css";
-
+import { TbMoodEmpty } from "react-icons/tb";
 import Image from "next/image";
-import { Key, useEffect, useState } from "react";
+import { Key, SetStateAction, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import SearchBar from "./searchInput";
+import { useForm } from "react-hook-form";
 export default function FriendsList(props: {
   friends: any;
   setUserTwoId: any;
@@ -13,6 +15,12 @@ export default function FriendsList(props: {
   const [friends, setFriends] = useState<any>([]);
   const [userId, setUserId] = useState("");
   const [loadingFriends, setLoadingFriends] = useState(true);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
   const myLoader = (src: any) => {
     return `${src.src}`;
   };
@@ -41,89 +49,92 @@ export default function FriendsList(props: {
             return b.personastate - a.personastate;
           })
         );
-        setLoadingFriends(false)
+        setLoadingFriends(false);
       })
       .catch((err) => {
-        console.error("err", err);
+        setLoadingFriends(false);
       });
   }, [props.friends]);
 
-  const formSubmit = async (e: any) => {
-    e.preventDefault();
-    const user = await fetchUser(userId);
-    console.log(user);
+  const onSubmit = async (data: any) => {
+    const user = await fetchUser(data.SearchValue);
     props.setUserTwoId(user.steamid);
   };
 
   return (
     <div className={styles.wrapper}>
-      <h2>Second User</h2>
       <form
-        onSubmit={(e) => {
-          formSubmit(e);
-        }}
+        onSubmit={
+          handleSubmit(onSubmit)
+        }
       >
-        <input
-          type="text"
-          name="userId"
-          title="userId"
-          onChange={(e) => setUserId(e.target.value)}
-        />
-        <button>dsa</button>
+        <SearchBar register={{ ...register("SearchValue") }} />
       </form>
+      <h2>Friends</h2>
       <div className={styles.friendsContainer}>
-        {loadingFriends &&  <Skeleton
-          baseColor="var(--dark-blue-glass)"
-          highlightColor="var(--steam-blue)"
-          count={6}
-          height="60px"
-          style={{ margin: "6px 0" }}
-        />}
+        {loadingFriends && (
+          <Skeleton
+            baseColor="var(--dark-blue-glass)"
+            highlightColor="var(--steam-blue)"
+            count={6}
+            height="60px"
+            style={{ margin: "6px 0" }}
+          />
+        )}
         <ul>
-          {friends.length > 0 &&
-            friends.map(
-              (
-                friend: {
-                  steamid: string;
-                  avatarfull: string;
-                  personaname: string;
-                  personastate: number;
-                  profileurl: string;
-                },
-                idx: Key
-              ) => {
-                const userState =
-                  friend.personastate !== 0 ? "online" : "offline";
-                return (
-                  <li key={idx} className={styles[userState]}>
-                    <a
-                      href={friend.profileurl}
-                      target="_blank"
-                      className={`${styles.pfpWrapper}`}
-                      rel="noreferrer"
-                    >
-                      <Image
-                        loader={myLoader}
-                        src={friend.avatarfull}
-                        layout="fixed"
-                        width={60}
-                        height={60}
-                        alt={friend.personaname + " profile picture"}
-                        unoptimized={true}
-                      />
-                    </a>
-                    <span className={`${styles.statusBar}`} />
-                    <p>{friend.personaname}</p>
-                    <button
-                      className="greenButton"
-                      onClick={() => props.setUserTwoId(friend.steamid)}
-                    >
-                      Compare
-                    </button>
-                  </li>
-                );
-              }
-            )}
+          {friends.length > 0
+            ? friends.map(
+                (
+                  friend: {
+                    steamid: string;
+                    avatarfull: string;
+                    personaname: string;
+                    personastate: number;
+                    profileurl: string;
+                  },
+                  idx: Key
+                ) => {
+                  const userState =
+                    friend.personastate !== 0 ? "online" : "offline";
+                  return (
+                    <li key={idx} className={styles[userState]}>
+                      <a
+                        href={friend.profileurl}
+                        target="_blank"
+                        className={`${styles.pfpWrapper}`}
+                        rel="noreferrer"
+                        title={"Go to " + friend.personaname + "'s profile"}
+                      >
+                        <Image
+                          loader={myLoader}
+                          src={friend.avatarfull}
+                          layout="fixed"
+                          width={60}
+                          height={60}
+                          alt={friend.personaname + " profile picture"}
+                          unoptimized={true}
+                        />
+                      </a>
+                      <span className={`${styles.statusBar}`} />
+                      <p>{friend.personaname}</p>
+                      <button
+                        className="greenButton"
+                        onClick={() => props.setUserTwoId(friend.steamid)}
+                      >
+                        Compare
+                      </button>
+                    </li>
+                  );
+                }
+              )
+            : !loadingFriends && (
+                <div className={styles.noFriends}>
+                  <TbMoodEmpty />
+                  No friends found..
+                  <br />
+                  Try searching instead
+                </div>
+              )}
         </ul>
       </div>
     </div>
