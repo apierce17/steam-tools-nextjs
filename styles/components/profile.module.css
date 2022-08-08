@@ -184,3 +184,19 @@
 .gameCard :global(.imgError) + p {
   display: block!important;
 }
+
+@media screen and (max-width: 1140px) {
+  .profileWrapper {
+    width: 100%;
+    max-width: unset;
+  }
+}
+@media screen and (max-width: 433px) {
+  .gameCard {
+    width: 100px;
+    height: 140px;
+  }
+  .gameCard p {
+    font-size: 12px;
+  }
+}

@@ -51,3 +51,12 @@ main {
   font-weight: 600;
   cursor: pointer;
 }
+.inputError {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0;
+}
+.inputError svg {
+  color: var(--alert);
+}

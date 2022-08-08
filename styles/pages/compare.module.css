@@ -10,3 +10,29 @@
     max-width: 1500px;
     margin: auto;
 }
+
+.searchBar {
+    width: 90%;
+    max-width: 500px;
+    background-color: var(--dark-blue-glass);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+}
+.searchBar h1 {
+    font-size: 1rem;
+}
+.searchBar form {
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .compareWrapper {
+        padding: 50px 0;
+    }
+}

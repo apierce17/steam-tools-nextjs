@@ -107,3 +107,22 @@
   .noFriends svg {
     font-size: 40px;
   }
+
+  @media screen and (max-width: 1140px) {
+    .wrapper {
+      width: 100%;
+      max-width: unset;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .friendsContainer li > a {
+      min-width: 60px;
+    }
+    .friendsContainer li > span {
+      margin-right: 5px;
+    }
+    .friendsContainer li > p {
+      font-size: 12px;
+    }
+  }

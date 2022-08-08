@@ -1,12 +1,12 @@
-
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import FriendsList from "../components/modules/friendsList";
 import MutualGames from "../components/modules/mutualGames";
 import Profile from "../components/modules/profile";
+import SearchBar from "../components/modules/searchInput";
 import styles from "../styles/pages/Compare.module.css";
+import {MdError} from 'react-icons/md'
 
-Compare.title = "Compare -";
 export default function Compare() {
   const [userId, setUserId] = useState("");
   const [userOne, setUserOne] = useState<any>([]);
@@ -15,15 +15,22 @@ export default function Compare() {
   const [userTwoId, setUserTwoId] = useState("");
   const [userTwoGameIds, setUserTwoGameIds] = useState<any>([]);
   const [matchedGames, setMatchedGames] = useState([]);
+  const [isError, setIsError] = useState(false)
 
-  const fetchUserOne = async () => {
+  const fetchUserOne = async (userId: string) => {
     const response = await fetch(
       "/api/steam/user/" + userId + "?getfriends=true&getgames=true"
     );
     const data = await response.json();
-    setUserOne(data);
-    data.games.games && data.games.games.map((game: any) => userOneGameIds.push(game.appid))
+    return data;
   };
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     const fetchUserTwo = async () => {
@@ -32,37 +39,58 @@ export default function Compare() {
       );
       const data = await response.json();
       setUserTwo(data);
-      data.games.games && data.games.games.map((game: any) => userTwoGameIds.push(game.appid))
+      data.games.games &&
+        data.games.games.map((game: any) => userTwoGameIds.push(game.appid));
     };
     fetchUserTwo();
   }, [userTwoGameIds, userTwoId]);
 
   useEffect(() => {
-    userTwo.games && setMatchedGames(userOneGameIds.filter((element: any) => userTwoGameIds.includes(element)));
-  }, [userOneGameIds, userTwo.games, userTwoGameIds])
+    userTwo.games &&
+      setMatchedGames(
+        userOneGameIds.filter((element: any) =>
+          userTwoGameIds.includes(element)
+        )
+      );
+  }, [userOneGameIds, userTwo.games, userTwoGameIds]);
 
   useEffect(() => {
-    userId == '' && (setUserOne(''), setUserOneGameIds([]), setMatchedGames([]), setUserTwoId(''), setUserTwo(''), setUserTwoGameIds([]), setMatchedGames([]))
-  }, [userId])
+    userId == "" &&
+      (setUserOne(""),
+      setUserOneGameIds([]),
+      setMatchedGames([]),
+      setUserTwoId(""),
+      setUserTwo(""),
+      setUserTwoGameIds([]),
+      setMatchedGames([]));
+  }, [userId]);
 
   useEffect(() => {
-    userTwoId == '' && (setUserTwo(''), setUserTwoGameIds([]), setMatchedGames([]))
-  }, [userTwoId])
-
-  console.log(matchedGames)
+    userTwoId == "" &&
+      (setUserTwo(""), setUserTwoGameIds([]), setMatchedGames([]));
+  }, [userTwoId]);
+  const onSubmit = (data: any) => {
+    fetchUserOne(data.SearchValue)
+    .then(res => {
+      setUserOne(res);
+      res.games.games &&
+      res.games.games.map((game: any) => userOneGameIds.push(game.appid));
+      setUserId(res.user.steamid);
+    })
+    .catch(() => setIsError(true))
+  };
   return (
     <>
       <div className={styles.compareWrapper}>
         {!userOne.user && (
-          <>
-            <input
-              title="userId"
-              type="text"
-              name="userId"
-              onChange={(e) => setUserId(e.target.value)}
-            />
-            <button onClick={() => fetchUserOne()}>dsa</button>
-          </>
+          <div className={styles.searchBar}>
+            <h1>Enter your Steam ID or Vanity URL to get started!</h1>
+            <form onSubmit={handleSubmit(onSubmit)} onChange={() => setIsError(false)}>
+              <SearchBar register={{ ...register("SearchValue", { required: true })}} />
+              {errors.SearchValue && <span className="inputError"> <MdError/> This field is required</span>}
+              {isError && <span className="inputError"> <MdError/> User not found!</span>}
+            </form>
+          </div>
         )}
         {userOne.user && (
           <>
