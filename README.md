@@ -5,6 +5,8 @@ This was a rebuild of an early project of mine utilizing the Steam API! Currentl
 
 [Deployed Link](https://steam-tools.vercel.app/)
 
+For demo purposes on the compare page you can use the Steam ID 'k0tatv' and then click any friend!
+
 ## Technologies used
 ### Main
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
