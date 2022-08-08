@@ -14,7 +14,7 @@
   --green-text: #d2efa9;
   --steam-blue: #1b2838;
   --text: #c5c3c0;
-  --dark-blue-glass: rgba(18, 25, 39, 0.98);
+  --dark-blue-glass: rgba(18, 25, 39, 0.65);
   --alert: #e68d19;
   --border: rgba(255, 255, 255, 0.125);
   --dark-transparent: #0c111bb4;
@@ -40,6 +40,9 @@ main {
   margin: auto;
   padding: 0 20px;
   min-height: calc(100vh - 180px);
+  background-image: url(https://cdn.cloudflare.steamstatic.com/steam/apps/730/page_bg_generated_v6b.jpg);
+  background-repeat: no-repeat;
+  background-position: top center;
 }
 
 .greenButton {

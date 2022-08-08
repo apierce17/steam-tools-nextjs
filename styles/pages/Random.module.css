@@ -22,7 +22,9 @@
     flex-wrap: wrap;
     padding: 20px;
 }
-
+.randomContainer button {
+  margin: 20px auto 0;
+}
 .gameContainer {
     height: 400px;
     width: 300px;
@@ -149,4 +151,22 @@
   }
   .gameCard :global(.imgError) + p {
     display: block !important;
+  }
+
+  @media screen and (max-width: 768px) {
+    .randomContainer {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+    }
+    .gameContainer,
+    .gameDetails,
+    .gameCard,
+    .gameCard > span {
+      width: 90%!important;
+    }
+    .gameCard > span {
+      margin: auto!important;
+    }
   }

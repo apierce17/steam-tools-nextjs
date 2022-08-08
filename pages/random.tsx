@@ -44,6 +44,7 @@ export default function Home() {
         .then((res) => {
           setAllGames(res);
           setIsLoading(false);
+          // getGame();
         })
         .catch((err) => console.log(err));
     }
