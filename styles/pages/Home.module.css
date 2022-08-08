@@ -1,0 +1,33 @@
+.contentWrapper {
+    width: 90%;
+    max-width: 1500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: calc(100vh - 60px);
+    margin: auto;
+    gap: 50px;
+}
+
+.tileWrapper {
+    background-color: var(--dark-blue-glass);
+    height: 25vh;
+    min-height: 250px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 300px;
+    max-width: 90%;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    flex-direction: column;
+    padding: 10px;
+}
+.tileWrapper p {
+    text-align: center;
+    font-size: 12px;
+}
+.tileWrapper .icon {
+    font-size: 50px;
+}
