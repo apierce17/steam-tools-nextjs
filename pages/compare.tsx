@@ -4,7 +4,7 @@ import FriendsList from "../components/modules/friendsList";
 import MutualGames from "../components/modules/mutualGames";
 import Profile from "../components/modules/profile";
 import SearchBar from "../components/modules/searchInput";
-import styles from "../styles/pages/Compare.module.css";
+import styles from "../styles/Compare.module.css";
 import {MdError} from 'react-icons/md'
 
 export default function Compare() {
