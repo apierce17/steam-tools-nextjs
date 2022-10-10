@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div className={styles.contentWrapper}>
       <Tile name={'Compare'} route={'/compare'} icon={<BsGrid3X2GapFill/>} title={'Compare games with friends and find something to play!'}/>
-      <Tile name={'Random'} route={'/random'} icon={<GiCardRandom/>} title={'Find a random item on Steam!'}/>
+      {/* <Tile name={'Random'} route={'/random'} icon={<GiCardRandom/>} title={'Find a random item on Steam!'}/> */}
     </div>
   );
 }

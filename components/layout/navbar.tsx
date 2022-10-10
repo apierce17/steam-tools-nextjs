@@ -28,9 +28,9 @@ export default function Navbar() {
                 <li className={`${styles[router.pathname == "/compare" ? "active" : "inactive"]}`}>
                     <Link href="/compare">Compare</Link>
                 </li>
-                <li className={`${styles[router.pathname == "/random" ? "active" : "inactive"]}`}>
+                {/* <li className={`${styles[router.pathname == "/random" ? "active" : "inactive"]}`}>
                     <Link href="/random">Random</Link>
-                </li>
+                </li> */}
             </ul>
         </div>
     </nav>
