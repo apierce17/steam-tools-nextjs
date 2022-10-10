@@ -25,8 +25,8 @@ export default function Footer() {
             <hr/>
             <div className={styles.subInfo}>
                 <ul>
-                    <li>Built by <a href="">Ashton Pierce</a></li>
-                    <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+                    <li>Built by <a href="https://portfolio-next-js-apierce17.vercel.app">Ashton Pierce</a></li>
+                    {/* <li><Link href="/privacy-policy">Privacy Policy</Link></li> */}
                     <li>All information used in this site is property of Valve/Steam, for more information please view our about page.</li>
                 </ul>
             </div>
