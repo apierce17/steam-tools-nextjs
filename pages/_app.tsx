@@ -1,11 +1,17 @@
-import { AppProps } from 'next/app';
-import '../styles/globals.css'
-import Head from 'next/head'
-import Layout from '../components/layout/layout'
+import { AppProps } from "next/app";
+import "../styles/globals.css";
+import Layout from "../components/layout/layout";
+import { NextSeo } from "next-seo";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <GoogleAnalytics trackPageViews />
+      <NextSeo
+        titleTemplate="%s - Steam Tools"
+        description="A place with cool features for Steam! Find mutual games with friends on Steam for starters!"
+      />
       <Layout>
         <Component {...pageProps} />
       </Layout>

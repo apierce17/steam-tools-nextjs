@@ -1,5 +1,9 @@
 const apikey = process.env.REACT_APP_STEAM_KEY;
 
+function timeout(time: number) {
+  return new Promise(resolve => setTimeout(resolve, time));
+} 
+
 const resolveVanityURL = async (id: string) => {
   const response = await fetch(
     `https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=${apikey}&vanityurl=${id}`
@@ -12,10 +16,13 @@ const resolveVanityURL = async (id: string) => {
   }
 };
 
-const fetchUser = async (userId: string) => {
+const fetchUser = async (userId: string, delay: number) => {
+  console.log(delay)
+  await timeout(delay);
   const response = await fetch(
     `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apikey}&steamids=${userId}`
   );
+  console.log(response.status)
   const data = await response.json();
   return data.response.players[0];
 };
@@ -53,9 +60,9 @@ const fetchFriends = async (userId: string, getfriends: string) => {
 };
 
 export default async function handler(req: any, res: any) {
-  const { id, getfriends, getgames } = req.query;
+  const { id, getfriends, getgames, delay } = req.query;
   const userId = await resolveVanityURL(id);
-  const user = await fetchUser(userId);
+  const user = await fetchUser(userId, delay);
   const games = await fetchLibrary(userId, getgames);
   const friends = await fetchFriends(userId, getfriends);
   res.status(200).json({ user, games, friends });

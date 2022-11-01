@@ -6,6 +6,8 @@ import Profile from "../components/modules/profile";
 import SearchBar from "../components/modules/searchInput";
 import styles from "../styles/Compare.module.css";
 import {MdError} from 'react-icons/md'
+import { NextSeo } from "next-seo";
+import { event } from "nextjs-google-analytics";
 
 export default function Compare() {
   const [userId, setUserId] = useState("");
@@ -35,14 +37,14 @@ export default function Compare() {
   useEffect(() => {
     const fetchUserTwo = async () => {
       const response = await fetch(
-        "/api/steam/user/" + userTwoId + "?getfriends=true&getgames=true"
+        "/api/steam/user/" + userTwoId + "?getfriends=false&getgames=true"
       );
       const data = await response.json();
       setUserTwo(data);
       data.games.games &&
         data.games.games.map((game: any) => userTwoGameIds.push(game.appid));
     };
-    fetchUserTwo();
+    userTwoId != '' && fetchUserTwo();
   }, [userTwoGameIds, userTwoId]);
 
   useEffect(() => {
@@ -69,7 +71,12 @@ export default function Compare() {
     userTwoId == "" &&
       (setUserTwo(""), setUserTwoGameIds([]), setMatchedGames([]));
   }, [userTwoId]);
+  
   const onSubmit = (data: any) => {
+    event("P1_Search", {
+      category: "Search",
+      label: data.SearchValue,
+    });
     fetchUserOne(data.SearchValue)
     .then(res => {
       setUserOne(res);
@@ -79,8 +86,14 @@ export default function Compare() {
     })
     .catch(() => setIsError(true))
   };
+
+  console.log(userTwoId)
   return (
     <>
+      <NextSeo
+        title="Compare"
+        description="A place with cool features for Steam! Find mutual games with friends on Steam for starters!"
+      />
       <div className={styles.compareWrapper}>
         {!userOne.user && (
           <div className={styles.searchBar}>
@@ -105,10 +118,11 @@ export default function Compare() {
               personastate={userOne.user.personastate}
             />
 
-            {!userTwoId && (
+            {userOne && (
               <FriendsList
                 friends={userOne.friends}
                 setUserTwoId={setUserTwoId}
+                show={userTwoId === '' ? true : false}
               />
             )}
             {userTwoId && userTwo.user && (

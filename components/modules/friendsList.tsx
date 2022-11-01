@@ -11,9 +11,9 @@ import { useForm } from "react-hook-form";
 export default function FriendsList(props: {
   friends: any;
   setUserTwoId: any;
+  show: boolean;
 }) {
   const [friends, setFriends] = useState<any>([]);
-  const [userId, setUserId] = useState("");
   const [loadingFriends, setLoadingFriends] = useState(true);
   const {
     register,
@@ -24,9 +24,9 @@ export default function FriendsList(props: {
   const myLoader = (src: any) => {
     return `${src.src}`;
   };
-  const fetchUser = async (userId: string) => {
+  const fetchUser = async (userId: string, idx: number) => {
     const response = await fetch(
-      "/api/steam/user/" + userId + "?getfriends=false&getgames=false"
+      "/api/steam/user/" + userId + "?getfriends=false&getgames=false&delay=" + idx
     );
     const data = await response.json();
     return data.user;
@@ -36,12 +36,15 @@ export default function FriendsList(props: {
     setLoadingFriends(true);
     const responseData = async () => {
       return Promise.all(
-        props.friends.map((friend: { steamid: string }) => {
-          return fetchUser(friend.steamid);
+        props.friends.map((friend: { steamid: string }, idx: number) => {
+          return fetchUser(friend.steamid, idx * 15);
         })
       );
     };
 
+    if(friends.length > 0) {
+      setLoadingFriends(false);
+    } else {
     responseData()
       .then((res) => {
         setFriends(
@@ -49,20 +52,23 @@ export default function FriendsList(props: {
             return b.personastate - a.personastate;
           })
         );
+        console.log(res)
+        console.log(friends)
         setLoadingFriends(false);
       })
       .catch((err) => {
         setLoadingFriends(false);
       });
-  }, [props.friends]);
+    }
+  }, [props.friends, friends]);
 
   const onSubmit = async (data: any) => {
-    const user = await fetchUser(data.SearchValue);
+    const user = await fetchUser(data.SearchValue, 0);
     props.setUserTwoId(user.steamid);
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${styles[props.show ? 'show' : 'hide']}`}>
       <form
         onSubmit={
           handleSubmit(onSubmit)
@@ -82,7 +88,7 @@ export default function FriendsList(props: {
           />
         )}
         <ul>
-          {friends.length > 0
+          {!loadingFriends && friends.length > 0
             ? friends.map(
                 (
                   friend: {
@@ -128,12 +134,12 @@ export default function FriendsList(props: {
                 }
               )
             : !loadingFriends && (
-                <div className={styles.noFriends}>
+                <li className={styles.noFriends}>
                   <TbMoodEmpty />
                   No friends found..
                   <br />
                   Try searching instead
-                </div>
+                </li>
               )}
         </ul>
       </div>
